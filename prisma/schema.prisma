@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js" // Generates Prisma Client for database operations.
+}
+
+datasource db {
+  provider = "sqlite" // Specifies SQLite as the database provider.
+  url      = env("DATABASE_URL") // Retrieves database URL from environment variables.
+}
+
+model Category {
+  id        Int      @id @default(autoincrement()) // Unique identifier for categories, auto-incremented.
+  name      String   @unique // Unique name for each category.
+  foods     Food[] // Array of foods associated with this category.
+  createdAt DateTime @default(now()) // Date and time when the category was created.
+  updatedAt DateTime @updatedAt // Date and time of the last update to the category.
+}
+
+model Food {
+  id               Int               @id @default(autoincrement()) // Unique identifier for foods, auto-incremented.
+  name             String            @unique // Unique name for each food.
+  calories         Float? // Calories in the food (optional).
+  protein          Float? // Protein content in grams (optional).
+  fat              Float? // Fat content in grams (optional).
+  carbohydrates    Float? // Carbohydrates content in grams (optional).
+  fiber            Float? // Fiber content in grams (optional).
+  sugar            Float? // Sugar content in grams (optional).
+  foodServingUnits FoodServingUnit[] // Array of serving units for this food.
+  servingUnits     ServingUnit[] // Array of general serving units for this food.
+  category         Category?         @relation(fields: [categoryId], references: [id]) // Category associated with this food.
+  categoryId       Int? // ID of the category associated with this food.
+  createdAt        DateTime          @default(now()) // Date and time when the food was created.
+  updatedAt        DateTime          @updatedAt // Date and time of the last update to the food.
+  Meal             Meal?             @relation(fields: [mealId], references: [id]) // Meal associated with this food.
+  mealId           Int? // ID of the meal associated with this food.
+  MealFood         MealFood[] // Array of meal foods involving this food.
+}
+
+model ServingUnit {
+  id              Int               @id @default(autoincrement()) // Unique identifier for serving units, auto-incremented.
+  name            String            @unique // Unique name for each serving unit.
+  foodServingUnit FoodServingUnit[] // Array of serving units for specific foods.
+  food            Food?             @relation(fields: [foodId], references: [id]) // Food associated with this serving unit.
+  foodId          Int? // ID of the food associated with this serving unit.
+  createdAt       DateTime          @default(now()) // Date and time when the serving unit was created.
+  updatedAt       DateTime          @updatedAt // Date and time of the last update to the serving unit.
+  MealFood        MealFood[] // Array of meal foods involving this serving unit.
+}
+
+model FoodServingUnit {
+  id            Int         @id @default(autoincrement()) // Unique identifier for food serving units, auto-incremented.
+  food          Food        @relation(fields: [foodId], references: [id]) // Food associated with this serving unit.
+  servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id]) // Serving unit associated with this serving unit.
+  grams         Float? // Weight in grams for this serving unit.
+  foodId        Int // ID of the food associated with this serving unit.
+  servingUnitId Int // ID of the serving unit associated with this serving unit.
+  createdAt     DateTime    @default(now()) // Date and time when the serving unit was created.
+  updatedAt     DateTime    @updatedAt // Date and time of the last update to the serving unit.
+}
+
+model User {
+  id        Int      @id @default(autoincrement()) // Unique identifier for users, auto-incremented.
+  name      String // User's name.
+  email     String   @unique // Unique email address for each user.
+  password  String // User's password.
+  role      Role     @default(USER) // User's role, defaulting to USER.
+  meals     Meal[] // Array of meals associated with this user.
+  createdAt DateTime @default(now()) // Date and time when the user was created.
+  updatedAt DateTime @updatedAt // Date and time of the last update to the user.
+}
+
+enum Role {
+  USER // Regular user role.
+  ADMIN // Administrator role.
+}
+
+model Meal {
+  id        Int        @id @default(autoincrement()) // Unique identifier for meals, auto-incremented.
+  dateTime  DateTime // Date and time when the meal occurred.
+  foods     Food[] // Array of foods in this meal.
+  user      User?      @relation(fields: [userId], references: [id]) // User associated with this meal.
+  userId    Int? // ID of the user associated with this meal.
+  createdAt DateTime   @default(now()) // Date and time when the meal was created.
+  updatedAt DateTime   @updatedAt // Date and time of the last update to the meal.
+  mealFoods MealFood[] // Array of meal foods involving this meal.
+}
+
+model MealFood {
+  id            Int         @id @default(autoincrement()) // Unique identifier for meal foods, auto-incremented.
+  food          Food        @relation(fields: [foodId], references: [id]) // Food associated with this meal food.
+  meal          Meal        @relation(fields: [mealId], references: [id]) // Meal associated with this meal food.
+  foodId        Int // ID of the food associated with this meal food.
+  mealId        Int // ID of the meal associated with this meal food.
+  amount        Float // Amount of the food in this meal, in appropriate units.
+  servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id]) // Serving unit used for this meal food.
+  createdAt     DateTime    @default(now()) // Date and time when the meal food was created.
+  updatedAt     DateTime    @updatedAt // Date and time of the last update to the meal food.
+  servingUnitId Int // ID of the serving unit associated with this meal food.
+}
