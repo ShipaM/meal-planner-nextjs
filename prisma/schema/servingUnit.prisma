@@ -1,0 +1,10 @@
+model ServingUnit {
+ id              Int               @id @default(autoincrement()) // Unique identifier for serving units, auto-incremented.
+ name            String            @unique // Unique name for each serving unit.
+ foodServingUnit FoodServingUnit[] // Array of serving units for specific foods.
+ food            Food?             @relation(fields: [foodId], references: [id]) // Food associated with this serving unit.
+ foodId          Int? // ID of the food associated with this serving unit.
+ createdAt       DateTime          @default(now()) // Date and time when the serving unit was created.
+ updatedAt       DateTime          @updatedAt // Date and time of the last update to the serving unit.
+ mealFood        MealFood[] // Array of meal foods involving this serving unit.
+}

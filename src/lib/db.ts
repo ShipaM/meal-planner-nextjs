@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+//By using this pattern - singleton via global object - we ensure that we always use the same PrismaClient instance.
+
 const prismaClientSingleton = () => {
   return new PrismaClient();
 };

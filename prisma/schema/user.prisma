@@ -1,0 +1,15 @@
+model User {
+ id        Int      @id @default(autoincrement()) // Unique identifier for users, auto-incremented.
+ name      String // User's name.
+ email     String   @unique // Unique email address for each user.
+ password  String // User's password.
+ role      Role     @default(USER) // User's role, defaulting to USER.
+ meals     Meal[] // Array of meals associated with this user.
+ createdAt DateTime @default(now()) // Date and time when the user was created.
+ updatedAt DateTime @updatedAt // Date and time of the last update to the user.
+}
+
+enum Role {
+ USER // Regular user role.
+ ADMIN // Administrator role.
+}

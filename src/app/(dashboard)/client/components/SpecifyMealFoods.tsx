@@ -1,9 +1,9 @@
-import { useServingUnits } from "@/app/(dashboard)/admin/foods-management/serving-units/_services/useQueries";
+import { useServingUnits } from "@/app/(dashboard)/admin/foods-management/serving-units/services/useQueries";
 import { Button } from "@/components/ui/button";
 import { CirclePlus, Trash2, UtensilsCrossed } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { MealSchema } from "../types/mealSchema";
-import { useFoods } from "../../admin/foods-management/foods/_services/useFoodQueries";
+import { useFoods } from "../../admin/foods-management/foods/services/useFoodQueries";
 import { ControlledSelect } from "@/components/ui/ControlledSelect";
 import { ControlledInput } from "@/components/ui/ControlledInput";
 

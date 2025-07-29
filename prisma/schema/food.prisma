@@ -1,0 +1,19 @@
+model Food {
+ id               Int               @id @default(autoincrement()) // Unique identifier for foods, auto-incremented.
+ name             String            @unique // Unique name for each food.
+ calories         Float? // Calories in the food (optional).
+ protein          Float? // Protein content in grams (optional).
+ fat              Float? // Fat content in grams (optional).
+ carbohydrates    Float? // Carbohydrates content in grams (optional).
+ fiber            Float? // Fiber content in grams (optional).
+ sugar            Float? // Sugar content in grams (optional).
+ foodServingUnits FoodServingUnit[] // Array of serving units for this food.
+ servingUnits     ServingUnit[] // Array of general serving units for this food.
+ category         Category?         @relation(fields: [categoryId], references: [id]) // Category associated with this food.
+ categoryId       Int? // ID of the category associated with this food.
+ createdAt        DateTime          @default(now()) // Date and time when the food was created.
+ updatedAt        DateTime          @updatedAt // Date and time of the last update to the food.
+ meal             Meal?             @relation(fields: [mealId], references: [id]) // Meal associated with this food.
+ mealId           Int? // ID of the meal associated with this food.
+ mealFood         MealFood[] // Array of meal foods involving this food.
+}

@@ -1,0 +1,7 @@
+model Category {
+ id        Int      @id @default(autoincrement()) // Unique identifier for categories, auto-incremented.
+ name      String   @unique // Unique name for each category.
+ foods     Food[] // Array of foods associated with this category.
+ createdAt DateTime @default(now()) // Date and time when the category was created.
+ updatedAt DateTime @updatedAt // Date and time of the last update to the category.
+}

@@ -1,0 +1,10 @@
+model FoodServingUnit {
+ id            Int         @id @default(autoincrement()) // Unique identifier for food serving units, auto-incremented.
+ food          Food        @relation(fields: [foodId], references: [id]) // Food associated with this serving unit.
+ servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id]) // Serving unit associated with this serving unit.
+ grams         Float? // Weight in grams for this serving unit.
+ foodId        Int // ID of the food associated with this serving unit.
+ servingUnitId Int // ID of the serving unit associated with this serving unit.
+ createdAt     DateTime    @default(now()) // Date and time when the serving unit was created.
+ updatedAt     DateTime    @updatedAt // Date and time of the last update to the serving unit.
+}

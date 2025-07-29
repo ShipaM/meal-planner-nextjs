@@ -12,77 +12,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { ROUTE_GROUPS } from "@/config/routeGroups";
 import { customErrorMap } from "@/lib/customErrorMap";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { motion } from "framer-motion";
-import {
-  Apple,
-  Boxes,
-  ChevronDown,
-  ChevronLeft,
-  LogOut,
-  Menu,
-  Ruler,
-  Utensils,
-} from "lucide-react";
+import { ChevronLeft, LogOut, Menu } from "lucide-react";
 import { Session } from "next-auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { z } from "zod";
+import { RouteGroup } from "./RouteGroup";
 
 z.setErrorMap(customErrorMap);
 
-type RouteGroup = {
-  group: string;
-  items: {
-    href: string;
-    label: string;
-    icon: ReactNode;
-  }[];
-};
-
-const ROUTE_GROUPS: RouteGroup[] = [
-  {
-    group: "Foods Management",
-    items: [
-      {
-        href: "/admin/foods-management/foods",
-        label: "Foods",
-        icon: <Apple className="mr-2 size-3" />,
-      },
-      {
-        href: "/admin/foods-management/categories",
-        label: "Categories",
-        icon: <Boxes className="mr-2 size-3" />,
-      },
-      {
-        href: "/admin/foods-management/serving-units",
-        label: "Serving Units",
-        icon: <Ruler className="mr-2 size-3" />,
-      },
-    ],
-  },
-  {
-    group: "Meals Management",
-    items: [
-      {
-        href: "/client",
-        label: "Meals",
-        icon: <Utensils className="mr-2 size-3" />,
-      },
-    ],
-  },
-];
-
 type DashboardLayoutProps = { children: ReactNode; session: Session };
+
 const DashboardLayout = ({ children, session }: DashboardLayoutProps) => {
   const [open, setOpen] = useState(false);
   const signOutMutation = useSignOut();
   const userRole = session.user?.role || "user";
+  console.log(userRole);
 
   const filteredRouteGroups = ROUTE_GROUPS.filter((group) => {
-    if (userRole === "admin") {
+    if (userRole === "ADMIN") {
       return group.group === "Foods Management";
     } else {
       return group.group === "Meals Management";
@@ -180,59 +130,6 @@ const DashboardLayout = ({ children, session }: DashboardLayoutProps) => {
         {children}
       </main>
     </div>
-  );
-};
-
-type RouteGroupProps = RouteGroup;
-const RouteGroup = ({ group, items }: RouteGroupProps) => {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
-  return (
-    <Collapsible.Root open={open} onOpenChange={setOpen}>
-      <Collapsible.Trigger asChild>
-        <Button
-          className="text-foreground/80 flex w-full justify-between font-normal"
-          variant="ghost"
-        >
-          {group}
-          <motion.div animate={{ rotate: open ? 180 : 0 }}>
-            <ChevronDown />
-          </motion.div>
-        </Button>
-      </Collapsible.Trigger>
-      <Collapsible.Content forceMount>
-        <motion.div
-          className={`flex flex-col gap-2 ${
-            !open ? "pointer-events-none" : ""
-          }`}
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
-        >
-          {items.map((item) => (
-            <Button
-              className="w-full justify-start font-normal"
-              variant="link"
-              asChild
-              key={item.href}
-            >
-              <Link
-                href={item.href}
-                className={`flex items-center rounded-md px-5 py-1 transition-all ${
-                  pathname === item.href
-                    ? "bg-foreground/10 hover:bg-foreground/5"
-                    : "hover:bg-foreground/10"
-                }`}
-              >
-                {item.icon}
-                <span className="text-sm">{item.label}</span>
-              </Link>
-            </Button>
-          ))}
-        </motion.div>
-      </Collapsible.Content>
-    </Collapsible.Root>
   );
 };
 

@@ -1,6 +1,6 @@
-import { FoodCards } from "./_components/FoodCards";
-import { FoodFiltersDrawer } from "./_components/FoodFiltersDrawer";
-import { FoodFormDialog } from "./_components/FoodFormDialog";
+import { FoodCards } from "./components/FoodCards";
+import { FoodFiltersDrawer } from "./components/FoodFiltersDrawer";
+import { FoodFormDialog } from "./components/FoodFormDialog";
 
 const Page = () => {
   return (

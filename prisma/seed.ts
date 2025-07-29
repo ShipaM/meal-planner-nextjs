@@ -3,6 +3,7 @@ import * as bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+//This script is a seed script, i.e. a script for initial database filling. It is used to create an initial (super) administrator when the project is first launched.
 async function main() {
   const adminEmail = "super@admin.com";
   const existingAdmin = await prisma.user.findUnique({

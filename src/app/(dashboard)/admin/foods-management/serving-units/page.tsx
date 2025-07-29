@@ -1,5 +1,5 @@
-import { ServingUnitCards } from "./_components/ServingUnitCards";
-import { ServingUnitFormDialog } from "./_components/ServingUnitFormDialog";
+import { ServingUnitCards } from "./components/ServingUnitCards";
+import { ServingUnitFormDialog } from "./components/ServingUnitFormDialog";
 
 const Page = () => {
   return (

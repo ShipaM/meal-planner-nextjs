@@ -1,0 +1,10 @@
+model Meal {
+ id        Int        @id @default(autoincrement()) // Unique identifier for meals, auto-incremented.
+ dateTime  DateTime // Date and time when the meal occurred.
+ foods     Food[] // Array of foods in this meal.
+ user      User?      @relation(fields: [userId], references: [id]) // User associated with this meal.
+ userId    Int? // ID of the user associated with this meal.
+ createdAt DateTime   @default(now()) // Date and time when the meal was created.
+ updatedAt DateTime   @updatedAt // Date and time of the last update to the meal.
+ mealFoods MealFood[] // Array of meal foods involving this meal.
+}

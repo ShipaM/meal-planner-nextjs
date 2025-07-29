@@ -1,5 +1,5 @@
-import { CategoryCards } from "./_components/CategoryCards";
-import { CategoryFormDialog } from "./_components/CategoryFormDialog";
+import { CategoryCards } from "./components/CategoryCards";
+import { CategoryFormDialog } from "./components/CategoryFormDialog";
 
 const Page = () => {
   return (

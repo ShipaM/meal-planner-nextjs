@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { DashboardLayout } from "./components/DashboardLayout";
 
 type LayoutProps = { children: ReactNode };
+
 const Layout = async ({ children }: LayoutProps) => {
   const session = await auth();
   if (!session) redirect("/sign-in");

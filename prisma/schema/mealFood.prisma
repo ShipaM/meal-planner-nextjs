@@ -1,0 +1,12 @@
+model MealFood {
+ id            Int         @id @default(autoincrement()) // Unique identifier for meal foods, auto-incremented.
+ food          Food        @relation(fields: [foodId], references: [id]) // Food associated with this meal food.
+ meal          Meal        @relation(fields: [mealId], references: [id]) // Meal associated with this meal food.
+ foodId        Int // ID of the food associated with this meal food.
+ mealId        Int // ID of the meal associated with this meal food.
+ amount        Float // Amount of the food in this meal, in appropriate units.
+ servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id]) // Serving unit used for this meal food.
+ createdAt     DateTime    @default(now()) // Date and time when the meal food was created.
+ updatedAt     DateTime    @updatedAt // Date and time of the last update to the meal food.
+ servingUnitId Int // ID of the serving unit associated with this meal food.
+}

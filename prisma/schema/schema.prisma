@@ -1,0 +1,9 @@
+generator client {
+  provider = "prisma-client-js" // Generates Prisma Client for database operations.
+}
+
+datasource db {
+  provider = "sqlite" // Specifies SQLite as the database provider.
+  url      = env("DATABASE_URL") // Retrieves database URL from environment variables.
+}
+
