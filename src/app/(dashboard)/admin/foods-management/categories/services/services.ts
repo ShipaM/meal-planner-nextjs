@@ -31,12 +31,12 @@ const updateCategory = async (data: CategorySchema) => {
 
 const deleteCategory = async (id: number) => {
   await executeAction({
-    actionFn: () => db.category.delete({ where: { id } }),
+    actionFn: () => db.category.delete({ where: { id } }), //Prisma method to delete a record from the category table where the id matches the one passed.
   });
 };
 
 const getCategories = async () => {
-  return await db.category.findMany();
+  return await db.category.findMany(); //calls the Prisma Client method to query all records from the category table in the database. This is analogous to the SQL query: SELECT * FROM category;
 };
 
 const getCategory = async (id: number): Promise<CategorySchema> => {

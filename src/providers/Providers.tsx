@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
         toast.error(e.message);
       },
       onSuccess: () => {
-        toast.error("Operation was successful.");
+        toast.success("Operation was successful.");
       },
     },
   },
@@ -25,6 +25,7 @@ const queryClient = new QueryClient({
 type ProvidersProps = {
   children: ReactNode;
 };
+
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <NextThemesProvider

@@ -1,8 +1,10 @@
 import { createStore } from "@/lib/createStore";
+import { ReactNode } from "react";
 
 type AlertConfig = {
   title?: string;
-  description?: string;
+  description?: ReactNode;
+  itemInfo?: ReactNode;
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm?: () => void;
