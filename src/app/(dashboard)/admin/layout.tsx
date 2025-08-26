@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 type LayoutProps = { children: ReactNode };
+
 const Layout = async ({ children }: LayoutProps) => {
   const session = await auth();
   console.log(session);

@@ -16,6 +16,7 @@ const ThemeToggle = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
   if (!mounted) return null;
 
   const themes = ["light", "dark", "system"];
