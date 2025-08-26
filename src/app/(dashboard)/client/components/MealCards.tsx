@@ -19,6 +19,7 @@ import { MealCardsSkeleton } from "./MealCardsSkeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Meal, MealFood } from "../types/mealFood";
 
 const MealCards = () => {
   const { updateSelectedMealId, updateMealDialogOpen, mealFilters } =
@@ -28,14 +29,14 @@ const MealCards = () => {
 
   const deleteMealMutation = useDeleteMeal();
 
-  const calculateTotalCalories = (mealFoods) => {
+  const calculateTotalCalories = (mealFoods: MealFood[]) => {
     return mealFoods.reduce((total, mealFood) => {
       const foodCalories = mealFood.food.calories * mealFood.amount || 0;
       return total + foodCalories;
     }, 0);
   };
 
-  const calculateNutritionTotals = (meals) => {
+  const calculateNutritionTotals = (meals: Meal[]) => {
     return (
       meals?.reduce(
         (totals, meal) => {
@@ -55,7 +56,7 @@ const MealCards = () => {
     );
   };
 
-  const nutritionTotals = calculateNutritionTotals(mealsQuery.data);
+  const nutritionTotals = calculateNutritionTotals(mealsQuery.data as Meal[]);
 
   const displayDate = mealFilters.dateTime
     ? format(new Date(mealFilters.dateTime), "EEEE, MMMM d, yyyy")
@@ -199,7 +200,9 @@ const MealCards = () => {
         <h3 className="mb-4 text-lg font-medium">Meals</h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {mealsQuery.data?.map((meal) => {
-            const totalCalories = calculateTotalCalories(meal.mealFoods);
+            const totalCalories = calculateTotalCalories(
+              meal.mealFoods as MealFood[],
+            );
 
             return (
               <div

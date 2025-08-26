@@ -10,7 +10,8 @@
     "db:migrate": "prisma migrate dev --schema=./prisma/schema/",
     "db:studio": "prisma studio --port=9999 --schema=./prisma/schema/",
     "prisma:generate": "prisma generate --schema=./prisma/schema/",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
